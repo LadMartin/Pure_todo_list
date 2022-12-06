@@ -3,6 +3,27 @@ from datetime import datetime, timedelta
 import pytest
 import requests
 
+'''
+Velka pochvala za testy ale priznam se ze jsem je necetl :D
+
+nicmene co by stalo za zvazeni je jestli neudelat nejaky builder pro zamotne data
+protoze ne vzdy chceme menit vsechno
+
+def data_builder(id=TODO_ID, text='uklidit pokoj', deadline=DATE_NOW):
+    return {
+        "id": id,
+        "text": text,
+        "deadline": deadline,
+    }
+
+pripadne nejake slozitejsi variace
+
+mozna i nejakou abstrakci nad url
+
+def url(args):
+    return f"{URL}/todo" + '/'.join(args)
+'''
+
 
 URL = "http://localhost:5000"
 TODO_ID = "Ukol_1"

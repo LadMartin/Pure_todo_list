@@ -41,12 +41,22 @@ def apply_is_done_filter(input_list, status) -> List[Dict]:
     for item_dict in range(len(input_list)):
         if str(status) == str(input_list[item_dict]["is_done"]):
             output_list.append(input_list[item_dict])
+    # predchozi zapis jde udelat na jeden radek, je veci nazoru jestli je to lepsi v tomhle pripade
+    # ale v pythonu se to casto pouziva
+    # [input_list[item_dict] for item_dict in range(len(input_list) if str(status) == str(input_list[item_dict]["is_done"])]
     return output_list
 
 
 def apply_count_filter(input_list, count) -> List[Dict]:
     """return a list containing the requested number of items"""
     output_list = []
+
+    '''
+    l = [1,2,3,4]
+
+    print(l[:7])
+    toto je v poradku, neni potreba kontrola
+    '''
     if count >= len(input_list):
         output_list = input_list
 
@@ -83,6 +93,9 @@ def add_item_to_file(item_dict) -> bool:
     content = []
     item_dict["is_done"] = False
 
+    # toho bychom mohli delat nekde na zacatku programu v inicializaci a ne pri kazdem volani
+    # asi by se nam mohlo stat ze nam nejaky zloduch file v prubehu programu smaze ale pak mame vetsi problem
+    # protoze jsme prisli o vsechna data
     if not os.path.isfile(PATH_TO_FILE):
         with open(PATH_TO_FILE, mode='w', encoding='utf-8') as file:
             json.dump(content, file)
@@ -134,6 +147,9 @@ def get_item_from_file(item_id) -> List[Dict]:
 
 def update_item_in_file(item_id, status) -> bool:
     """update the status of the requested item in the file"""
+    # Lze si vsimnout ze tento pattern se stale opakuje precist - upravit - zapsat
+    # je to v update, delete, add
+    # je dobre takovou to duplicaci redukovat
     status_value = True if status == "set_done" else False
     with open(PATH_TO_FILE, mode="r", encoding="utf-8") as file:
         reader = json.load(file)
@@ -149,5 +165,6 @@ def update_item_in_file(item_id, status) -> bool:
     if item_existence:
         with open(PATH_TO_FILE, mode='w', encoding='utf-8') as file:
             json.dump(reader, file)
+    
 
     return item_existence
